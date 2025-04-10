@@ -36,6 +36,13 @@
       </div>
     </div>
     <div class="placeholder-background placeholder-background--animation" data-image-placeholder></div>
+    {% if settings.enable_quick_view %}
+      <div class="quick-view-btn-container">
+        <button class="btn quick-view-trigger" data-product-url="{{ product.url }}" data-product-id="{{ product.id }}" aria-haspopup="dialog">
+          {{ 'products.product.quick_view' | t }}
+        </button>
+      </div>
+    {% endif %}
   </div>
 
   <noscript>
@@ -44,7 +51,17 @@
   </noscript>
 
   <div class="h4 grid-view-item__title product-card__title" aria-hidden="true">{{ product.title }}</div>
-
   {% include 'product-price-listing', product: product, show_vendor: show_vendor %}
-
 </div>
+
+  {% if product.available and settings.enable_ajax %}
+    <div class="product-card__add-to-cart">
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" name="add" class="btn product-card__cart-btn js-ajax-submit">
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+        </button>
+      </form>
+    </div>
+    <div class="ajax-error-message hide js-ajax-error-message"></div>
+  {% endif %}

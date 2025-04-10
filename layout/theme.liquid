@@ -106,6 +106,10 @@
   <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
   <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+  {% if settings.enable_quick_view %}
+  <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
+  {% endif %}
 
   {{ content_for_header }}
 </head>
@@ -117,6 +121,10 @@
   {%- if settings.enable_ajax -%}
     {% include 'cart-popup' %}
   {%- endif -%}
+
+  {% if settings.enable_quick_view %}
+    {% include 'quick-view-popup' %}
+  {% endif %}
 
   {% section 'header' %}
 

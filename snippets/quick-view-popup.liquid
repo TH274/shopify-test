@@ -1,0 +1,38 @@
+{%- style -%}
+  {% assign popup_box_shadow = settings.color_borders | color_modify: 'alpha', 0.5 %}
+
+  .quick-view-popup {
+    box-shadow: 1px 1px 10px 2px {{ popup_box_shadow }};
+  }
+{%- endstyle -%}
+
+<div class="quick-view-popup-wrapper quick-view-popup-wrapper--hidden" role="dialog" aria-modal="true" aria-labelledby="QuickViewHeading" data-quick-view-popup-wrapper>
+  <div class="quick-view-popup" data-quick-view-popup tabindex="-1">
+    <div class="quick-view-popup__header">
+      <h2 id="QuickViewHeading" class="quick-view-popup__heading">{{ 'products.product.quick_view' | t }}</h2>
+      <button class="quick-view-popup__close" aria-label="{{ 'general.accessibility.close_modal' | t }}" data-quick-view-popup-close>{% include 'icon-close' %}</button>
+    </div>
+    <div class="quick-view-popup__content grid">
+      <div class="quick-view-popup__image-wrapper grid__item medium-up--one-half" data-quick-view-image-wrapper>
+        <div class="quick-view-popup__image--placeholder" data-quick-view-image-placeholder>
+          <div class="placeholder-background placeholder-background--animation"></div>
+        </div>
+      </div>
+      <div class="quick-view-popup__product-details grid__item medium-up--one-half">
+        <h3 class="quick-view-popup__title" data-quick-view-title></h3>
+        <div class="quick-view-popup__price" data-quick-view-price></div>
+        <div class="quick-view-popup__variant-selector" data-quick-view-variant-selector></div>
+        <div class="quick-view-form-container" data-quick-view-form-container></div>
+        <div class="quick-view-popup__description rte" data-quick-view-description></div>
+        <a class="quick-view-popup__view-details btn" data-quick-view-details-link href="#">
+          {{ 'products.product.view_full_details' | t }}
+        </a>
+      </div>
+    </div>
+    <div class="quick-view-popup__dismiss">
+      <button class="quick-view-popup__dismiss-button text-link text-link--accent" data-quick-view-popup-dismiss>
+        {{ 'products.product.continue_shopping' | t }}
+      </button>
+    </div>
+  </div>
+</div> 

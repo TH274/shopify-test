@@ -8665,3 +8665,239 @@ $min-height-disclosure: 92px;
   }
 }
 
+/* ============================================================================
+  Collection page product card Add to Cart button
+============================================================================== */
+.product-card__add-to-cart {
+  margin-top: 10px;
+}
+
+.product-card__cart-btn {
+  width: 100%;
+  background-color: $color-btn-primary;
+  color: $color-btn-primary-text;
+  font-size: 14px;
+  padding: 8px 10px;
+  transition: all 0.15s ease-in-out;
+  
+  &:hover {
+    background-color: darken($color-btn-primary, 10%);
+  }
+  
+  &.btn--loading {
+    opacity: 0.5;
+    cursor: default;
+    
+    > span {
+      visibility: hidden;
+    }
+  }
+}
+
+.ajax-error-message {
+  color: $color-error;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* ============================================================================
+  Quick View Popup
+============================================================================== */
+.quick-view-btn-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.product-card:hover .quick-view-btn-container {
+  opacity: 1;
+}
+
+.quick-view-trigger {
+  background-color: $color-btn-primary;
+  color: $color-btn-primary-text;
+  padding: 10px 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  
+  &:hover {
+    background-color: darken($color-btn-primary, 10%);
+  }
+  
+  &.btn--loading {
+    opacity: 0.5;
+    cursor: default;
+    
+    &:after {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -10px;
+      margin-left: -10px;
+      border-radius: 50%;
+      border: 2px solid $color-btn-primary-text;
+      border-top-color: transparent;
+      animation: spin 0.5s linear infinite;
+    }
+  }
+}
+
+.quick-view-popup-wrapper {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.quick-view-popup-wrapper--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.quick-view-popup {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: $color-body;
+  transition: all 0.3s ease;
+  
+  @include media-query($medium-up) {
+    padding: 30px;
+  }
+}
+
+.quick-view-popup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $color-border;
+}
+
+.quick-view-popup__heading {
+  margin: 0;
+  padding: 0;
+  font-size: em(18px);
+  
+  @include media-query($medium-up) {
+    font-size: em(22px);
+  }
+}
+
+.quick-view-popup__close {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.quick-view-popup__content {
+  margin-bottom: 20px;
+}
+
+.quick-view-popup__image-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+  
+  @include media-query($medium-up) {
+    margin-bottom: 0;
+  }
+}
+
+.quick-view-popup__image {
+  max-width: 100%;
+  max-height: 300px;
+  margin: 0 auto;
+}
+
+.quick-view-popup__title {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: em(20px);
+}
+
+.quick-view-popup__price {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.quick-view-popup__description {
+  margin-bottom: 20px;
+}
+
+.quick-view-popup__view-details {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.quick-view-popup__dismiss {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.quick-view-form {
+  margin-bottom: 20px;
+  
+  .quick-view-variant-selector {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid $color-border;
+  }
+  
+  .quick-view-quantity {
+    margin-bottom: 15px;
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    input {
+      width: 80px;
+      padding: 8px;
+      border: 1px solid $color-border;
+    }
+  }
+  
+  .quick-view-add-to-cart-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: $color-btn-primary;
+    color: $color-btn-primary-text;
+    border: none;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: darken($color-btn-primary, 10%);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

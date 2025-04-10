@@ -61,8 +61,8 @@
       "no_results": "Try checking your spelling or using different words.",
       "empty_search_message": "Search field cannot be empty",
       "results_with_count": {
-        "one": "{{ count }} result for “{{ terms }}”",
-        "other": "{{ count }} results for “{{ terms }}”"
+        "one": "{{ count }} result for \"{{ terms }}\"",
+        "other": "{{ count }} results for \"{{ terms }}\""
       },
       "title": "Search our site",
       "placeholder": "Search",
@@ -353,12 +353,12 @@
     },
     "onboarding": {
       "product_title": "Your product's name",
-      "product_description": "This area is used to describe your product’s details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.",
+      "product_description": "This area is used to describe your product's details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.",
       "collection_title": "Your collection's name",
       "blog_title": "Your post's title",
-      "blog_excerpt": "Your store hasn’t published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify’s ecommerce blog for inspiration and advice for your own store and blog.",
+      "blog_excerpt": "Your store hasn't published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify's ecommerce blog for inspiration and advice for your own store and blog.",
       "blog_author": "Author name",
-      "no_content": "This section doesn’t currently include any content. Add content to this section using the sidebar."
+      "no_content": "This section doesn't currently include any content. Add content to this section using the sidebar."
     }
   },
   "layout": {
@@ -396,6 +396,9 @@
       "sale_price": "Sale price",
       "quantity": "Quantity",
       "add_to_cart": "Add to cart",
+      "quick_view": "Quick View",
+      "view_full_details": "View full details",
+      "continue_shopping": "Continue shopping",
       "loader_label": "Adding product to your cart",
       "back_to_collection": "Back to {{ title }}",
       "vendor": "Vendor",

@@ -1336,6 +1336,14 @@
           "zh-TW": "新增商品至購物車時顯示通知"
         },
         "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quick_view",
+        "label": {
+          "en": "Enable quick view on collection pages"
+        },
+        "default": true
       }
     ]
   }
