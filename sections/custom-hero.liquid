@@ -52,9 +52,11 @@
       <h2>{{ section.settings.heading }}</h2>
       <p>{{ section.settings.subheading }}</p>
       {% if section.settings.button_link %}
-        <a href="{{ section.settings.button_link }}" class="custom-hero-button">
-          {{ section.settings.button_label }}
-        </a>
+        <div class="button-container">
+          <a href="{{ section.settings.button_link }}" class="custom-hero-button">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
       {% endif %}
     </div>
   </div>
@@ -62,8 +64,9 @@
 
 <style>
 .custom-hero-container {
-  padding: 60px 20px;
+  padding: 0;
   background-color: #f6f6f6;
+  width: 100%;
 }
 
 .custom-hero-inner {
@@ -77,36 +80,65 @@
 
 .custom-hero-image {
   flex: 1 1 50%;
-  text-align: center;
+  text-align: left;
 }
 
 .custom-hero-image img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
 .custom-hero-content {
-  flex: 1 1 50%;
-  padding: 20px;
+  flex: 1 1 40%;
+  padding: 20px 40px;
+  text-align: center;
 }
 
 .custom-hero-content h2 {
-  font-size: 36px;
-  margin-bottom: 10px;
+  font-size: 42px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #333;
 }
 
 .custom-hero-content p {
   font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: #777;
 }
 
+.button-container {
+  margin-top: 25px;
+}
+
 .custom-hero-button {
-  background-color: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #000;
+  background-color: transparent;
+  padding: 10px 25px;
+  border: 1px solid #333;
   text-decoration: none;
-  color: #000;
-  font-weight: bold;
+  color: #333;
+  font-weight: normal;
+  font-size: 14px;
+  text-transform: capitalize;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.custom-hero-button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .custom-hero-inner {
+    flex-direction: column;
+  }
+  
+  .custom-hero-image, 
+  .custom-hero-content {
+    flex: 1 1 100%;
+  }
 }
 </style>

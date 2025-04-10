@@ -33,6 +33,13 @@
     {% endschema %}
     
     {% stylesheet %}
+
+    .featured-products-wrapper h2 {
+      margin-left: 10px;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
     .featured-products-grid {
       display: grid;
       gap: 30px;
@@ -43,6 +50,11 @@
     .featured-products-4 {
       grid-template-columns: repeat(4, 1fr);
     }
+
+    .featured-product-item {
+      padding: 20px;
+    }
+
     .featured-product-item img {
       width: 100%;
       height: auto;
