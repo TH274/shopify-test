@@ -1,0 +1,339 @@
+<div class="custom-slide-section">
+  {% if section.blocks.size > 0 %}
+    <div class="custom-slideshow" 
+         data-autorotate="{{ section.settings.autorotate }}"
+         data-speed="{{ section.settings.autorotate_speed | times: 1000 }}">
+      
+      {% for block in section.blocks %}
+        {% if block.type == 'image_slide' %}
+          <div class="custom-slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+            <div class="slide-image-container">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1920 | image_tag: loading: 'lazy', class: 'slide-image' }}
+              {% else %}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg slide-image' }}
+              {% endif %}
+            </div>
+            
+            <div class="slide-content-container">
+              <div class="slide-content">
+                {% if block.settings.slide_title != blank %}
+                  <h2 class="slide-title">{{ block.settings.slide_title }}</h2>
+                {% endif %}
+                
+                {% if block.settings.subheading != blank %}
+                  <p class="slide-subheading">{{ block.settings.subheading }}</p>
+                {% endif %}
+                
+                {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+                  <div class="slide-button-wrapper">
+                    <a href="{{ block.settings.button_link }}" class="slide-button">
+                      {{ block.settings.button_label }}
+                    </a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% if section.blocks.size > 1 %}
+        <div class="slide-indicators">
+          {% for block in section.blocks %}
+            {% if block.type == 'image_slide' %}
+              <button class="slide-indicator{% if forloop.first %} active{% endif %}" data-slide-index="{{ forloop.index0 }}"></button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="placeholder-slide">
+      <p>Add slide blocks to create a slideshow</p>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+.custom-slide-section {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-slideshow {
+  position: relative;
+  width: 100%;
+}
+
+.custom-slide {
+  display: none;
+  width: 100%;
+  position: relative;
+  background-color: #f5f5f5;
+}
+
+.custom-slide.active {
+  display: block;
+}
+
+.slide-image-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.slide-content-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5%;
+}
+
+.slide-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.slide-title {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  color: #333;
+}
+
+.slide-subheading {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
+.slide-button-wrapper {
+  margin-top: 1rem;
+}
+
+.slide-button {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #333;
+  color: #333;
+  background: transparent;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.slide-button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.slide-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.slide-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+}
+
+.slide-indicator.active {
+  background-color: white;
+}
+
+.placeholder-slide {
+  padding: 5rem 0;
+  text-align: center;
+  background-color: #f0f0f0;
+}
+
+@media screen and (max-width: 767px) {
+  .slide-content-container {
+    position: relative;
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+  
+  .slide-title {
+    font-size: 1.8rem;
+  }
+  
+  .slide-subheading {
+    font-size: 0.9rem;
+  }
+}
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const slideshow = document.querySelector('.custom-slideshow');
+    if (!slideshow) return;
+    
+    const slides = slideshow.querySelectorAll('.custom-slide');
+    const indicators = slideshow.querySelectorAll('.slide-indicator');
+    let currentSlide = 0;
+    let interval = null;
+    
+    // Handle auto-rotation
+    const autoRotate = slideshow.getAttribute('data-autorotate') === 'true';
+    const rotateSpeed = parseInt(slideshow.getAttribute('data-speed'), 10) || 5000;
+    
+    function showSlide(index) {
+      // Hide all slides
+      slides.forEach(slide => {
+        slide.classList.remove('active');
+      });
+      
+      // Update indicators
+      indicators.forEach(indicator => {
+        indicator.classList.remove('active');
+      });
+      
+      // Show selected slide
+      slides[index].classList.add('active');
+      
+      // Update indicator
+      if (indicators[index]) {
+        indicators[index].classList.add('active');
+      }
+      
+      currentSlide = index;
+    }
+    
+    function nextSlide() {
+      let next = currentSlide + 1;
+      if (next >= slides.length) {
+        next = 0;
+      }
+      showSlide(next);
+    }
+    
+    // Set up indicator click handlers
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        showSlide(index);
+        resetInterval();
+      });
+    });
+    
+    function resetInterval() {
+      if (autoRotate) {
+        clearInterval(interval);
+        interval = setInterval(nextSlide, rotateSpeed);
+      }
+    }
+    
+    // Initialize auto-rotation if enabled
+    if (autoRotate && slides.length > 1) {
+      interval = setInterval(nextSlide, rotateSpeed);
+    }
+  });
+</script>
+
+{% schema %}
+    {
+      "name": "Custom Slideshow",
+      "max_blocks": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "header",
+          "label": "Section Heading"
+        },
+        {
+          "type": "checkbox",
+          "id": "autorotate",
+          "label": "Auto-rotate"
+        },
+        {
+          "type": "range",
+          "id": "autorotate_speed",
+          "label": "Slide Speed (seconds)",
+          "min": 3,
+          "max": 10,
+          "step": 1,
+          "unit": "s",
+          "default": 5
+        }
+      ],
+      "blocks": [
+        {
+          "type": "image_slide",
+          "name": "Image Slide",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Slide Image"
+            },
+            {
+              "type": "text",
+              "id": "slide_title",
+              "label": "Heading",
+              "default": "Enjoy This Winter Trend"
+            },
+            {
+              "type": "text",
+              "id": "subheading",
+              "label": "Subheading",
+              "default": "Discover now latest collection"
+            },
+            {
+              "type": "text",
+              "id": "button_label",
+              "label": "Button Label",
+              "default": "Shop now"
+            },
+            {
+              "type": "url",
+              "id": "button_link",
+              "label": "Link Slide"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Custom Slide",
+          "category": "Image",
+          "settings": {
+            "autorotate": false,
+            "autorotate_speed": 5
+          },
+          "blocks": [
+            {
+              "type": "image_slide"
+            }
+          ]
+        }
+      ]
+    }
+    {% endschema %}
+    

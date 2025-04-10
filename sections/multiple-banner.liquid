@@ -1,166 +1,162 @@
-<style>
-  .banner-container {
-    align-items: center;
-    background: white;
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    justify-content: center;
-  }
-
-  @media screen and (max-width: 800px) {
-    .banner-container {
-      flex-direction: column;
+{% schema %}
+{
+  "name": "Multiple Banners",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Our Latest Products"
     }
-    .banner-container .banner-single-image {
+  ],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Banner Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Banner Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Banner Link"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Banner Width",
+          "options": [
+            {
+              "value": "quarter",
+              "label": "1/4"
+            },  
+            {
+              "value": "half",
+              "label": "1/2"
+            }
+          ],
+          "default": "quarter"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multiple Banners"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="multiple-banner-section">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+  
+  <div class="banner-container">
+    {% for block in section.blocks %}
+      {% if block.type == 'banner' %}
+        <div class="banner-item width-{{ block.settings.width }}" {{ block.shopify_attributes }}>
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}">
+          {% endif %}
+            <div class="banner-image-container">
+                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'banner-image' }}          
+                <div class="banner-title">
+                  {{ block.settings.title }}
+                </div>
+            </div>
+          {% if block.settings.link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .multiple-banner-section {
+    width: 100%;
+    padding: 20px 0px;
+    max-width: 100%;
+  }
+  
+  .section-title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .banner-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    width: 100%;
+  }
+  
+  .banner-item {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .width-quarter {
+    width: 25%;
+  }
+  
+  .width-half {
+    width: 50%;
+  }
+  
+  .banner-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  
+  .banner-title {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color: #000;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  .banner-item:hover .banner-image {
+    transform: scale(1.05);
+  }
+  
+  @media screen and (max-width: 767px) {
+    .width-quarter, .width-half {
       width: 100%;
     }
   }
-  .banner-container:hover .banner-single-image {
-    opacity: 0.5;
-  }
-
-  .banner-container:hover .banner-single-image:hover {
-    box-shadow: 0 0 10px 6px black;
-    flex: 4 1;
-    font-size: 20pt;
-    opacity: 1;
-  }
-
-  .banner-container:hover .banner-single-image:hover .banner-name {
-    flex: 0 0 60px;
-  }
-
-  .banner-container .banner-single-image {
-    background: none 50%;
-    background-size: cover;
-    box-shadow: 0 0 0 0 black;
-    display: flex;
-    flex: 1 1;
-    flex-direction: column;
-    font-size: 10pt;
-    height: 100%;
-    justify-content: flex-end;
-    transition: 0.3s;
-  }
-
-  .banner-container .banner-single-image .banner-name {
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    display: flex;
-    flex: 1 1;
-    justify-content: center;
-    width: 100%;
-    transition: 0.3s;
-    min-height: 500px;
-    text-decoration: none;
-  }
-  .banner-container #deadpool-banner {
-    background-image: url({{ section.settings.first-banner-image | image_url }});
-  }
-  .banner-container #guardians-banner {
-    background-image: url({{ section.settings.second-banner-image | image_url }});
-  }
-  .banner-container #assassins-banner {
-    background-image: url({{ section.settings.third-banner-image | image_url }});
-  }
-  .banner-container #justice-banner {
-    background-image: url({{ section.settings.fourth-banner-image | image_url }});
-  }
-  a {
-    text-decoration: solid;
+  
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    .width-quarter {
+      width: 50%;
+    }
   }
 </style>
-
-<div class="banner-container">
-  <a
-    href="/collections/{{ section.settings.first-banner-link }}"
-    id="deadpool-banner"
-    class="banner-single-image">
-    <div class="banner-name">{{ section.settings.first-banner-title }}</div>
-  </a>
-  <a
-    href="/collections/{{ section.settings.second-banner-link }}"
-    id="guardians-banner"
-    class="banner-single-image">
-    <div class="banner-name">{{ section.settings.second-banner-title }}</div>
-  </a>
-  <a
-    href="/collections/{{ section.settings.third-banner-link }}"
-    id="assassins-banner"
-    class="banner-single-image">
-    <div class="banner-name">{{ section.settings.third-banner-title }}</div>
-  </a>
-  <a
-    href="/collections/{{ section.settings.fourth-banner-link }}"
-    id="justice-banner"
-    class="banner-single-image">
-    <div class="banner-name">{{ section.settings.fourth-banner-title }}</div>
-  </a>
-</div>
-
-{% schema %}
-  {
-    "name": " Multiple banner ",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "first-banner-image",
-        "label": "First Image"
-      },
-      {
-        "type": "text",
-        "id": "first-banner-title",
-        "label": "first image text"
-      },
-      {
-        "type": "collection",
-        "id": "first-banner-link",
-        "label": "Collection to link to"
-      },
-      {
-        "type": "image_picker",
-        "id": "second-banner-image",
-        "label": "Second Image"
-      }, {
-        "type": "text",
-        "id": "second-banner-title",
-        "label": "second image text"
-      }, {
-        "type": "collection",
-        "id": "second-banner-link",
-        "label": "Collection to link to"
-      }, {
-        "type": "image_picker",
-        "id": "third-banner-image",
-        "label": "Third Image"
-      }, {
-        "type": "text",
-        "id": "third-banner-title",
-        "label": "third image text"
-      }, {
-        "type": "collection",
-        "id": "third-banner-link",
-        "label": "Collection to link to"
-      }, {
-        "type": "image_picker",
-        "id": "fourth-banner-image",
-        "label": "Fourth Image"
-      }, {
-        "type": "text",
-        "id": "fourth-banner-title",
-        "label": "fourth image text"
-      }, {
-        "type": "collection",
-        "id": "fourth-banner-link",
-        "label": "Collection to link to"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Multiple banner"
-      }
-    ]
-  }
-{% endschema %}
