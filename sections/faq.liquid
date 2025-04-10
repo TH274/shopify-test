@@ -1,0 +1,97 @@
+<style>
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .faq-item {
+    margin-bottom: 30px;
+  }
+  .faq-question {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .faq-answer {
+    font-size: 16px;
+    color: #555;
+  }
+  .faq-button-wrapper {
+    text-align: center;
+    margin-top: 40px;
+  }
+  .faq-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    background-color: #000;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+  }
+</style>
+
+<div class="faq-container">
+  {% for block in section.blocks %}
+    {% if block.type == 'faq-item' %}
+      <div class="faq-item">
+        <h3 class="faq-question">{{ block.settings.faq_title }}</h3>
+        <p class="faq-answer">{{ block.settings.faq_description }}</p>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  {% if section.settings.show_button %}
+    <div class="faq-button-wrapper">
+      <a href="{{ section.settings.button_link }}" class="faq-button">{{ section.settings.button_text }}</a>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "FAQ",
+    "settings": [
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+        "default": "Contact Us"
+      }, {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button Link"
+      }, {
+        "type": "checkbox",
+        "id": "show_button",
+        "label": "Show button",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "faq-item",
+        "name": "FAQ Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "faq_title",
+            "label": "Question Title",
+            "default": "What is your return policy?"
+          }, {
+            "type": "textarea",
+            "id": "faq_description",
+            "label": "Answer Description",
+            "default": "You can return any item within 30 days."
+          }
+        ]
+      }
+    ],
+    "max_blocks": 20,
+    "presets": [
+      {
+        "name": "FAQ Section",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

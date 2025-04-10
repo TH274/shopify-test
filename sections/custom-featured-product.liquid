@@ -1,0 +1,89 @@
+{% schema %}
+    {
+      "name": "Featured Products",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Section Title",
+          "default": "Featured Products"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "select",
+          "id": "products_per_row",
+          "label": "Products per row",
+          "default": "4",
+          "options": [
+            { "value": "3", "label": "3 per row" },
+            { "value": "4", "label": "4 per row" }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Featured Products"
+        }
+      ]
+    }
+    {% endschema %}
+    
+    {% stylesheet %}
+    .featured-products-grid {
+      display: grid;
+      gap: 30px;
+    }
+    .featured-products-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .featured-products-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .featured-product-item img {
+      width: 100%;
+      height: auto;
+    }
+    .featured-product-item .price {
+      font-weight: bold;
+    }
+    .featured-product-item .compare-price {
+      text-decoration: line-through;
+      color: gray;
+      margin-left: 5px;
+    }
+    {% endstylesheet %}
+    
+    <div class="featured-products-wrapper">
+      <h2>{{ section.settings.title }}</h2>
+    
+      {% assign collection = section.settings.collection %}
+      {% assign products = collections[collection].products %}
+    
+      {% if products.size > 0 %}
+        <div class="featured-products-grid featured-products-{{ section.settings.products_per_row }}">
+          {% for product in products %}
+            <div class="featured-product-item">
+              <a href="{{ product.url }}">
+                <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}">
+              </a>
+              <a href="{{ product.url }}">
+                <h3>{{ product.title }}</h3>
+              </a>
+              <div class="price">
+                {{ product.price | money }}
+                {% if product.compare_at_price > product.price %}
+                  <span class="compare-price">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>Select collections.</p>
+      {% endif %}
+    </div>
+    

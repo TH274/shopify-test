@@ -1,113 +1,112 @@
 {% schema %}
+{
+  "name": "Custom Hero Banner",
+  "tag": "section",
+  "class": "custom-hero-banner",
+  "settings": [
     {
-      "name": "Custom Hero Banner",
-      "tag": "section",
-      "class": "custom-hero-banner",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Left Side Image"
-        },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Enjoy This Winter Trend"
-        },
-        {
-          "type": "text",
-          "id": "subheading",
-          "label": "Subheading",
-          "default": "Discover now latest collection"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button Link"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button Label",
-          "default": "Shop now"
-        }
-      ],
-      "presets": [
-        {
-          "name": "Custom Hero Banner"
-        }
-      ]
+      "type": "image_picker",
+      "id": "image",
+      "label": "Left Side Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Enjoy This Winter Trend"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover now latest collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop now"
     }
-    {% endschema %}
-    
-    <div class="custom-hero-container">
-      <div class="custom-hero-inner">
-        {% if section.settings.image %}
-          <div class="custom-hero-image">
-            <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Hero Image" loading="lazy" />
-          </div>
-        {% endif %}
-        <div class="custom-hero-content">
-          <h2>{{ section.settings.heading }}</h2>
-          <p>{{ section.settings.subheading }}</p>
-          {% if section.settings.button_link %}
-            <a href="{{ section.settings.button_link }}" class="custom-hero-button">
-              {{ section.settings.button_label }}
-            </a>
-          {% endif %}
-        </div>
+  ],
+  "presets": [
+    {
+      "name": "Custom Hero Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-hero-container">
+  <div class="custom-hero-inner">
+    {% if section.settings.image %}
+      <div class="custom-hero-image">
+        <img src="{{ section.settings.image | image_url: width: 700 }}" alt="Hero Image" loading="lazy" />
       </div>
+    {% endif %}
+    <div class="custom-hero-content">
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.subheading }}</p>
+      {% if section.settings.button_link %}
+        <a href="{{ section.settings.button_link }}" class="custom-hero-button">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
     </div>
-    
-    <style>
-    .custom-hero-container {
-      padding: 60px 20px;
-      background-color: #f6f6f6;
-    }
-    
-    .custom-hero-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: auto;
-      flex-wrap: wrap;
-    }
-    
-    .custom-hero-image {
-      flex: 1 1 50%;
-      text-align: center;
-    }
-    
-    .custom-hero-image img {
-      max-width: 100%;
-      height: auto;
-    }
-    
-    .custom-hero-content {
-      flex: 1 1 50%;
-      padding: 20px;
-    }
-    
-    .custom-hero-content h2 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    
-    .custom-hero-content p {
-      font-size: 16px;
-      margin-bottom: 20px;
-      color: #777;
-    }
-    
-    .custom-hero-button {
-      background-color: #ffffff;
-      padding: 10px 20px;
-      border: 1px solid #000;
-      text-decoration: none;
-      color: #000;
-      font-weight: bold;
-    }
-    </style>
-    
+  </div>
+</div>
+
+<style>
+.custom-hero-container {
+  padding: 60px 20px;
+  background-color: #f6f6f6;
+}
+
+.custom-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.custom-hero-image {
+  flex: 1 1 50%;
+  text-align: center;
+}
+
+.custom-hero-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.custom-hero-content {
+  flex: 1 1 50%;
+  padding: 20px;
+}
+
+.custom-hero-content h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.custom-hero-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #777;
+}
+
+.custom-hero-button {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #000;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+}
+</style>
