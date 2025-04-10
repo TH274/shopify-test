@@ -5,6 +5,28 @@
 {% section 'product-template' %}
 {% section 'product-recommendations' %}
 
+{% if product %}
+  <hr>
+  <h2>Products info:</h2>
+
+  <p><strong>Tags:</strong>
+    {% for tag in product.tags %}
+      {{ tag }}{% unless forloop.last %}, {% endunless %}
+    {% endfor %}
+  </p>
+
+  <p><strong>Description:</strong> {{ product.description | default: "Coming soon" }}</p>
+
+  {% if product.tags contains "new" or product.tags contains "New" %}
+    <p style="color: green;"><strong>New Product</strong></p>
+  {% endif %}
+
+  {% if product.compare_at_price > product.price %}
+    {% assign sale_percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round %}
+    <p style="color: red;"><strong>Sale {{ sale_percent }}%</strong></p>
+  {% endif %}
+{% endif %}
+
 {% if collection %}
   <div class="text-center return-link-wrapper page-width">
     <a href="{{ collection.url }}" class="btn btn--secondary btn--has-icon-before return-link">

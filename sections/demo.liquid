@@ -1,3 +1,4 @@
+{% if template.name == 'page' %}
 {% assign hello_text = "Hello world!" %}
 
 <p> {{ hello_text }}</p>
@@ -35,9 +36,13 @@
 <p>{{ number | times: 10 }}</p>
 <p>{{ number | divided_by: 2 }}</p>
 
+
+{% comment %}
+  copy paste vào product page
+{% endcomment %}
 {% if product %}
   <hr>
-  <h2>Thông tin sản phẩm:</h2>
+  <h2>Products info:</h2>
 
   <p><strong>Tags:</strong>
     {% for tag in product.tags %}
@@ -55,4 +60,5 @@
     {% assign sale_percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round %}
     <p style="color: red;"><strong>Sale {{ sale_percent }}%</strong></p>
   {% endif %}
+{% endif %}
 {% endif %}
